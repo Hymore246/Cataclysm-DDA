@@ -3412,7 +3412,7 @@ void item::book_info( std::vector<iteminfo> &info, const iteminfo_query *parts, 
                 }
             }
 
-            if( total_recipes != (int) book.recipes.size() &&
+            if( total_recipes != static_cast<int>( book.recipes.size() ) &&
                 parts->test( iteminfo_parts::DESCRIPTION_BOOK_ADDITIONAL_RECIPES ) ) {
                 info.emplace_back( iteminfo( "DESCRIPTION",
                                              _( "It might help you figuring out some <good>more "
