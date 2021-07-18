@@ -3345,8 +3345,8 @@ void item::book_info( std::vector<iteminfo> &info, const iteminfo_query *parts, 
             std::vector<std::string> learnable_recipe_list;
             std::vector<std::string> unlearnable_recipe_list;
             for( const islot_book::recipe_with_description_t &elem : book.recipes ) {
-                 const bool knows_it = player_character.knows_recipe( elem.recipe );
-                 const bool can_learn = player_character.get_skill_level( elem.recipe->skill_used ) >=
+                const bool knows_it = player_character.knows_recipe( elem.recipe );
+                const bool can_learn = player_character.get_skill_level( elem.recipe->skill_used ) >=
                                         elem.skill_level;
                 // If the player knows it, they recognize it even if it's not clearly stated.
                 if( elem.is_hidden() && !knows_it ) {
