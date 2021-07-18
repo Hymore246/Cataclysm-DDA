@@ -3345,9 +3345,9 @@ void item::book_info( std::vector<iteminfo> &info, const iteminfo_query *parts, 
             std::vector<std::string> learnable_recipe_list;
             std::vector<std::string> unlearnable_recipe_list;
             for( const islot_book::recipe_with_description_t &elem : book.recipes ) {
-                const bool knows_it = player_character.knows_recipe( elem.recipe );
-                const bool can_learn = player_character.get_skill_level( elem.recipe->skill_used ) >=
-                    elem.skill_level;
+                 const bool knows_it = player_character.knows_recipe( elem.recipe );
+                 const bool can_learn = player_character.get_skill_level( elem.recipe->skill_used ) >=
+                                        elem.skill_level;
                 // If the player knows it, they recognize it even if it's not clearly stated.
                 if( elem.is_hidden() && !knows_it ) {
                     continue;
@@ -3376,17 +3376,17 @@ void item::book_info( std::vector<iteminfo> &info, const iteminfo_query *parts, 
                                              total_recipes ), total_recipes );
 
                 insert_separation_line( info );
-                info.push_back( iteminfo( "DESCRIPTION", recipe_line ) );
+                info.emplace_back( iteminfo( "DESCRIPTION", recipe_line ) );
 
                 if( !known_recipe_list.empty() ) {
                     std::string recipe_line =
-                        string_format( ngettext( "\nYou already known %1$d recipe:\n%2$s",
-                                                 "\nYou already known %1$d recipes:\n%2$s",
+                        string_format( ngettext( "\nYou already know %1$d recipe:\n%2$s",
+                                                 "\nYou already know %1$d recipes:\n%2$s",
                                                   known_recipe_list.size() ),
                                                   known_recipe_list.size(),
                                                   enumerate_as_string( known_recipe_list ) );
 
-                    info.push_back( iteminfo( "DESCRIPTION", recipe_line ) );
+                    info.emplace_back( iteminfo( "DESCRIPTION", recipe_line ) );
                 }
 
                 if( !learnable_recipe_list.empty() ) {
@@ -3397,7 +3397,7 @@ void item::book_info( std::vector<iteminfo> &info, const iteminfo_query *parts, 
                                                   learnable_recipe_list.size(),
                                                   enumerate_as_string( learnable_recipe_list ) );
 
-                    info.push_back( iteminfo( "DESCRIPTION", recipe_line ) );
+                    info.emplace_back( iteminfo( "DESCRIPTION", recipe_line ) );
                 }
 
                 if( !unlearnable_recipe_list.empty() ) {
@@ -3408,15 +3408,15 @@ void item::book_info( std::vector<iteminfo> &info, const iteminfo_query *parts, 
                                                   unlearnable_recipe_list.size(),
                                                   enumerate_as_string( unlearnable_recipe_list ) );
 
-                    info.push_back( iteminfo( "DESCRIPTION", recipe_line ) );
+                    info.emplace_back( iteminfo( "DESCRIPTION", recipe_line ) );
                 }
             }
 
-            if( total_recipes != book.recipes.size() &&
+            if( total_recipes != (int) book.recipes.size() &&
                 parts->test( iteminfo_parts::DESCRIPTION_BOOK_ADDITIONAL_RECIPES ) ) {
-                info.push_back( iteminfo( "DESCRIPTION",
-                    _( "It might help you figuring out some <good>more "
-                        "recipes</good>." ) ) );
+                info.emplace_back( iteminfo( "DESCRIPTION",
+                                             _( "It might help you figuring out some <good>more "
+                                             "recipes</good>." ) ) );
             }
         }
 
